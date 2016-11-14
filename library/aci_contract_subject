@@ -188,7 +188,6 @@ try:
 except ImportError as ie:
     HAS_COBRA = False
 
-
 KEY_MAP = {
     'descr': 'descr',
     'prio': 'prio'
@@ -279,7 +278,6 @@ def get_allowed_filters(moDir, proposed_filters, tenant):
     # TODO: clean up the filter
     all_filters = [str(each.name) for each in filter_objects
                    if 'common' in str(each.dn) or tenant in str(each.dn)]
-
     return all_filters
 
 
@@ -299,7 +297,6 @@ def do_all_filters_exist(proposed_filters, allowed_filters):
 
 
 def add_filters(new_sub_mo, type_filter, filter_list):
-
     if filter_list:
         if type_filter == 'filters':
             for each in filter_list:
@@ -308,7 +305,6 @@ def add_filters(new_sub_mo, type_filter, filter_list):
             vzInTerm = InTerm(new_sub_mo)
             for each in filter_list:
                 RsFiltAtt(vzInTerm, tnVzFilterName=each)
-
         elif type_filter == 'out_filters':
             vzOutTerm = OutTerm(new_sub_mo)
             for each in filter_list:
@@ -481,6 +477,7 @@ def main():
     if False in delta_bools:
         delta_for_lists = True
 
+
     new_sub_mo = None
     if state == 'present':
         if delta or (not existing) or delta_for_lists:
@@ -502,10 +499,10 @@ def main():
                         proposed_filters.get(type_filter)).difference(
                         existing_filters.get(type_filter)))
                     add_filters(new_sub_mo, type_filter, adders)
-
             for type_filter, filter_list in remove_objects.iteritems():
                 for each in filter_list:
                     remove_filter(type_filter, new_sub_mo, each)
+
 
     elif state == 'absent':
         if existing:
@@ -523,6 +520,7 @@ def main():
             changed = True
             config_req = ConfigRequest()
             config_req.addMo(new_sub_mo)
+            results['config_req']=config_req
             moDir.commit(config_req)
             existing, existing_filters = get_existing(moDir, subj_mo,
                                                       proposed_filters,
@@ -536,7 +534,6 @@ def main():
     results['state'] = state
     results['xmldoc'] = xmldoc
     results['changed'] = changed
-
     module.exit_json(**results)
 
 from ansible.module_utils.basic import *

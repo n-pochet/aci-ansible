@@ -6,8 +6,8 @@
   gather_facts: no
 
   vars:
-    filter1:
-      - arp
+    filter1: arp
+    filter2: icmp
 
   tasks:
     - name: ensure tenant exists
