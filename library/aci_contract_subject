@@ -520,7 +520,6 @@ def main():
             changed = True
             config_req = ConfigRequest()
             config_req.addMo(new_sub_mo)
-            results['config_req']=config_req
             moDir.commit(config_req)
             existing, existing_filters = get_existing(moDir, subj_mo,
                                                       proposed_filters,
